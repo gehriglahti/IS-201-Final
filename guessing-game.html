@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🎣 Fishing for the Secret Number</title>
+  <style>
+    body {
+      background-color: #e0f7fa;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #00796b;
+    }
+
+    .game-box {
+      background: #ffffff;
+      padding: 2rem;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+    }
+
+    input[type="number"] {
+      padding: 10px;
+      width: 100px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin-left: 10px;
+      font-size: 16px;
+      background-color: #00796b;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #004d40;
+    }
+
+    #resultMessage {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: bold;
+      color: #00695c;
+    }
+
+    #guessCount {
+      margin-top: 10px;
+      color: #555;
+    }
+
+    .back-link {
+      margin-top: 30px;
+      display: inline-block;
+      text-decoration: none;
+      color: #00796b;
+      font-weight: bold;
+    }
+
+    .back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="game-box">
+    <h1>🎣 Fishing for a Number</h1>
+    <p>Guess a number between 1 and 100 to catch the rare trout!</p>
+    <input type="number" id="guessInput" placeholder="Enter guess" />
+    <button onclick="checkGuess()">Cast Your Line</button>
+    <p id="resultMessage"></p>
+    <p id="guessCount"></p>
+    <button onclick="resetGame()">🎣 Fish Again</button>
+    <br>
+    <a href="scratch.html" class="back-link">Back to Scratch</a>
+  </div>
+
+  <script>
+    let secretNumber = Math.floor(Math.random() * 100) + 1;
+    let guesses = 0;
+    let gameOver = false;
+
+    function checkGuess() {
+      if (gameOver) return;
+
+      const guess = Number(document.getElementById("guessInput").value);
+      guesses++;
+      let message = "";
+
+      if (!guess || guess < 1 || guess > 100) {
+        message = "🎯 Stay in the pond! Guess between 1 and 100.";
+      } else if (guess < secretNumber) {
+        message = "Too low... maybe try deeper water 🌊";
+      } else if (guess > secretNumber) {
+        message = "Too high! Reel it in a bit 🎣";
+      } else {
+        message = `You caught it! 🐟 The number was ${secretNumber}. You got it in ${guesses} tries!`;
+        gameOver = true;
+      }
+
+      document.getElementById("resultMessage").textContent = message;
+      document.getElementById("guessCount").textContent = `Attempts: ${guesses}`;
+    }
+
+    function resetGame() {
+      secretNumber = Math.floor(Math.random() * 100) + 1;
+      guesses = 0;
+      gameOver = false;
+      document.getElementById("guessInput").value = "";
+      document.getElementById("resultMessage").textContent = "";
+      document.getElementById("guessCount").textContent = "";
+    }
+  </script>
+</body>
+
+</html>
